@@ -79,11 +79,11 @@ First Send /clone command then follow below steps.
 
 🔻 Its Main Purpose is To Provide You With High quality Content Like Course, Softwares And other Important Stuff
 
-🔻 It Will Serve You 24\7 With His Divine Content
+🔻 It Will Serve You 24*7 With His Divine Content
 
-🔻 Work Only With Links Provided By Excellerator Community. 
+🔻 It Works Only With Links Provided By Excellerator Community. 
 
-🔻 Seemlessly Stream and download You Content And Improve </b>"""
+🔻 seamlessly Stream and download Your Content And Improve </b>"""
 
 
 
