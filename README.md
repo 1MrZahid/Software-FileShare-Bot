@@ -102,5 +102,6 @@ Copyright ©️ [Tactition](https://telegram.me/tactition)
 
 ### Copyright ©️ [Tactition](https://telegram.me/tactition)
 
-<b>Selling This Repo Or Code Of This Repo is Allowed, Owner will take no action He is sleeping and dont Replay to Queries 🚫</b>
+<b>Selling This Repo Or Code Of This Repo is Allowed, Owner will take no action He is sleeping and dont Replay to queries
+ 🚫</b>
 
