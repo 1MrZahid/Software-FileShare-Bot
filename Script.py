@@ -110,7 +110,7 @@ First Send /clone command then follow below steps.
 
 
 
- LOG_TEXT = """<b> #Boss New User Added To Database 🔥
+    LOG_TEXT = """<b> #Boss New User Added To Database 🔥
     
 ID - <code>{}</code>
 
