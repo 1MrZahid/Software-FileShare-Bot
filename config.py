@@ -17,7 +17,7 @@ API_ID = int(environ.get("API_ID", "26205215"))
 API_HASH = environ.get("API_HASH", "d4d9b7bce6d76bec759e404ecf2c3ebf")
 BOT_TOKEN = environ.get("BOT_TOKEN", "7235447334:AAFZ4rBUNV6wsD2hvMB3zXxlU7M9GFj7dGM")
 
-PICS = (environ.get('PICS', 'https://graph.org/file/ce1723991756e48c35aa1.jpg')).split() # Bot Start Picture
+PICS = (environ.get('PICS', 'https://cdn.mos.cms.futurecdn.net/2NBcYamXxLpvA77ciPfKZW-970-80.jpg.webp')).split() # Bot Start Picture
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '1178233430').split()]
 BOT_USERNAME = environ.get("BOT_USERNAME", "R3volutionary_Bot") # without @
 PORT = environ.get("PORT", "8080")
@@ -67,7 +67,7 @@ WEBSITE_URL = environ.get("WEBSITE_URL", "") # For More Information Check Video 
 STREAM_MODE = bool(environ.get('STREAM_MODE', True)) # Set True or False
 
 # If Stream Mode Is True Then Fill All Required Variable, If False Then Don't Fill.
-MULTI_CLIENT = False
+MULTI_CLIENT = True
 SLEEP_THRESHOLD = int(environ.get('SLEEP_THRESHOLD', '60'))
 PING_INTERVAL = int(environ.get("PING_INTERVAL", "1200"))  # 20 minutes
 if 'DYNO' in environ:
