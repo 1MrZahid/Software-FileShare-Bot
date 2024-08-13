@@ -47,7 +47,7 @@ async def start(client, message):
             # InlineKeyboardButton('💝 sᴜʙsᴄʀɪʙᴇ ᴍʏ ʏᴏᴜᴛᴜʙᴇ ᴄʜᴀɴɴᴇʟ', url='https://youtube.com/@Tech_VJ')
             # ],
             [
-            InlineKeyboardButton('🔍 sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ', url='https://t.me/tactition'),
+            InlineKeyboardButton('🔍 sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ', url='https://t.me/Excellerators'),
             InlineKeyboardButton('🤖 ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ', url='https://t.me/Excellerator')
             ],[
             InlineKeyboardButton('💁‍♀️ ʜᴇʟᴘ', callback_data='help'),
@@ -191,7 +191,7 @@ async def start(client, message):
             await asyncio.sleep(1) 
         await sts.delete()
         if AUTO_DELETE_MODE == True:
-            k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis File will be deleted in <b><u>{AUTO_DELETE} minutes</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward this File to your Saved Messages and Start Download there</b>")
+            k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️IMPORTANT❗️</u></b>\n\n This File will be deleted Within <b><u>{AUTO_DELETE} Minutes</u>  <i></b>(Due to Copyright Issues)</i>.\n\n<b>So,You Are Requested to Forward The File to Saved Messages </b>")
             await asyncio.sleep(AUTO_DELETE_TIME)
             for x in filesarr:
                 try:
@@ -249,14 +249,14 @@ async def start(client, message):
                     )
                 )
             if AUTO_DELETE_MODE == True:
-                k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis File will be deleted in <b><u>{AUTO_DELETE} minutes</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward the File to your Saved Messages and Download there</b>")
+                k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️IMPORTANT❗️</u></b>\n\n This File will be deleted Within <b><u>{AUTO_DELETE} Minutes</u>  <i></b>(Due to Copyright Issues)</i>.\n\n<b>So,You Are Requested to Forward The File to Saved Messages </b>")
                 await asyncio.sleep(AUTO_DELETE_TIME)
                 try:
                     await msg.delete()
                 except:
                     pass
                 await g.delete()
-                await k.edit_text("<b> File deleted successfully!</b>")
+                await k.edit_text("<b>File deleted successfully. You are Always wellcomed to Request Again</b>")
             return
         except:
             pass
@@ -295,7 +295,7 @@ async def start(client, message):
     )
     if STREAM_MODE == True:
         g = await x.reply_text(
-            text=f"**•• ʏᴏᴜ ᴄᴀɴ ɢᴇɴᴇʀᴀᴛᴇ ᴏɴʟɪɴᴇ sᴛʀᴇᴀᴍ ʟɪɴᴋ ᴏғ ʏᴏᴜʀ ғɪʟᴇ ᴀɴᴅ ᴀʟsᴏ ғᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ ғᴏʀ ʏᴏᴜʀ ғɪʟᴇ ᴄʟɪᴄᴋɪɴɢ ᴏɴ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ 👇**",
+            text=f"**••ɢᴇɴᴇʀᴀᴛᴇ ᴏɴʟɪɴᴇ sᴛʀᴇᴀᴍ ʟɪɴᴋ ᴏғ ʏᴏᴜʀ ғɪʟᴇ & ғᴀsᴛ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ By ᴄʟɪᴄᴋɪɴɢ ᴏɴ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ 👇**",
             quote=True,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
@@ -307,7 +307,7 @@ async def start(client, message):
             )
         )
     if AUTO_DELETE_MODE == True:
-        k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis Movie File/Video will be deleted in <b><u>{AUTO_DELETE} minutes</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward this File/Video to your Saved Messages and Start Download there</b>")
+        k = await client.send_message(chat_id = message.from_user.id, text=f"<b><u>❗️IMPORTANT❗️</u></b>\n\n This File will be deleted Within <b><u>{AUTO_DELETE} Minutes</u>  <i></b>(Due to Copyright Issues)</i>.\n\n<b>So,You Are Requested to Forward The File to Saved Messages </b>")
         await asyncio.sleep(AUTO_DELETE_TIME)
         try:
             await x.delete()
@@ -382,7 +382,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             # InlineKeyboardButton('💝 sᴜʙsᴄʀɪʙᴇ ᴍʏ ʏᴏᴜᴛᴜʙᴇ ᴄʜᴀɴɴᴇʟ', url='https://youtube.com/@Tech_VJ')
             # ],
             [
-            InlineKeyboardButton('🔍 sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ', url='https://t.me/tactition'),
+            InlineKeyboardButton('🔍 sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ', url='https://t.me/Excellerators'),
             InlineKeyboardButton('🤖 ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ', url='https://t.me/Excellerator')
             ],
             # [
@@ -468,7 +468,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             ]]
             reply_markup=InlineKeyboardMarkup(button)
             await log_msg.reply_text(
-                text=f"•• ʟɪɴᴋ ɢᴇɴᴇʀᴀᴛᴇᴅ ꜰᴏʀ ɪᴅ #{user_id} \n•• ᴜꜱᴇʀɴᴀᴍᴇ : {username} \n\n•• ᖴᎥᒪᗴ Nᗩᗰᗴ : {fileName}",
+                text=f"•ʟɪɴᴋ ɢᴇɴᴇʀᴀᴛᴇᴅ ꜰᴏʀ #{user_id} •• \n •ᴜꜱᴇʀɴᴀᴍᴇ : {username} \n •FileName : {fileName}",
                 quote=True,
                 disable_web_page_preview=True,
                 reply_markup=reply_markup
