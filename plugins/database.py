@@ -1,8 +1,5 @@
-
-
 import logging
 from struct import pack
-import re
 import base64
 from pyrogram.file_id import FileId
 from pymongo.errors import DuplicateKeyError
@@ -10,23 +7,15 @@ from umongo import Instance, Document, fields
 from motor.motor_asyncio import AsyncIOMotorClient
 from config import DB_URI, DB_NAME
 
-
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-
-
 COLLECTION_NAME = "Telegram_Files"
 
-
-
-
+# Initialize MongoDB client and database
 client = AsyncIOMotorClient(DB_URI)
 db = client[DB_NAME]
 instance = Instance.from_db(db)
-
-
 
 @instance.register
 class Media(Document):
@@ -42,22 +31,21 @@ class Media(Document):
         indexes = ('$file_name', )
         collection_name = COLLECTION_NAME
 
-
-
-
 async def get_file_details(query):
-    filter = {'file_id': query}
-    cursor = Media.find(filter)
-    filedetails = await cursor.to_list(length=1)
-    return filedetails
-
-
-
+    try:
+        filter = {'file_id': query}
+        cursor = Media.find(filter)
+        filedetails = await cursor.to_list(length=1)
+        if not filedetails:
+            logger.warning(f"No file details found for file_id: {query}")
+        return filedetails
+    except Exception as e:
+        logger.error(f"Error retrieving file details: {e}")
+        return []
 
 def encode_file_id(s: bytes) -> str:
     r = b""
     n = 0
-
     for i in s + bytes([22]) + bytes([4]):
         if i == 0:
             n += 1
@@ -65,33 +53,27 @@ def encode_file_id(s: bytes) -> str:
             if n:
                 r += b"\x00" + bytes([n])
                 n = 0
-
             r += bytes([i])
-
     return base64.urlsafe_b64encode(r).decode().rstrip("=")
-
-
-
 
 def encode_file_ref(file_ref: bytes) -> str:
     return base64.urlsafe_b64encode(file_ref).decode().rstrip("=")
 
-
-
 def unpack_new_file_id(new_file_id):
     """Return file_id, file_ref"""
-    decoded = FileId.decode(new_file_id)
-    file_id = encode_file_id(
-        pack(
-            "<iiqq",
-            int(decoded.file_type),
-            decoded.dc_id,
-            decoded.media_id,
-            decoded.access_hash
+    try:
+        decoded = FileId.decode(new_file_id)
+        file_id = encode_file_id(
+            pack(
+                "<iiqq",
+                int(decoded.file_type),
+                decoded.dc_id,
+                decoded.media_id,
+                decoded.access_hash
+            )
         )
-    )
-    file_ref = encode_file_ref(decoded.file_reference)
-    return file_id, file_ref
-
-
-
+        file_ref = encode_file_ref(decoded.file_reference)
+        return file_id, file_ref
+    except Exception as e:
+        logger.error(f"Error unpacking file ID: {e}")
+        return None, None
