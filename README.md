@@ -2,7 +2,7 @@
   <img src="https://img.freepik.com/premium-photo/man-suit-is-playing-chess_1072138-227070.jpg?w=826">
 </p>
 <h1 align="center">
-  VJ FILE STORE BOT
+  Tactitions Empire Assistant
 </h1>
 
 ![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=Welcome+To+VJ-FILE-STORE-BOT;A+Highly+Advance+File+Store+Bot;Made+By+Yt-@Tech_VJ!;With+Clone+Feature+Stream/Download+Link;Custom+Url+Shortner+Auto+Delete+Feature;A+Bot+With+Fully+Advanced+Feature!;Must+Give+Credit+To+Tech+VJ;Because+He+Public+The+Paid+Repo;Thank+You!)
