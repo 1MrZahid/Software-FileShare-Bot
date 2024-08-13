@@ -2,7 +2,7 @@
 
 class script(object):
     START_TXT = """<b>Hᴇʟʟᴏ {},ᴍʏ ɴᴀᴍᴇ {},【ɪ ᴀᴍ ʟᴀᴛᴇꜱᴛ ᴀᴅᴠᴀɴᴄᴇᴅ ᴀɴᴅ ᴘᴏᴡᴇʀꜰᴜʟ Resources Storage ʙᴏᴛ Created For 
-    Excellerating Growth Of Mankind."""
+    <b>Excellerating Growth Of Mankind</b>."""
 
 
 
@@ -11,7 +11,7 @@ class script(object):
 
 sɪᴢᴇ ⚙️: {file_size}
 
-Jᴏɪɴ [Join Our Empire ](https://t.me/Excellerator)</b>""" 
+Jᴏɪɴ [Our Empire](https://t.me/Excellerator)</b>""" 
 
 
 
