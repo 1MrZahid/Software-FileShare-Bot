@@ -97,7 +97,7 @@ async def start(client, message):
             k = await msg.reply(f"<b><u>❗️❗️❗️IMPORTANT❗️️❗️❗️</u></b>\n\nThis Movie File/Video will be deleted in <b><u>{AUTO_DELETE} mins</u> 🫥 <i></b>(Due to Copyright Issues)</i>.\n\n<b><i>Please forward this File/Video to your Saved Messages and Start Download there</i></b>",quote=True)
             await asyncio.sleep(AUTO_DELETE_TIME)
             await msg.delete()
-            await k.edit_text("<b>Your File/Video is successfully deleted!!!</b>")
+            await k.edit_text("<b>Your File is successfully deleted!!!</b>")
             return
         except:
             pass
