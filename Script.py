@@ -1,7 +1,7 @@
 
 
 class script(object):
-    START_TXT = """<b>Hᴇʟʟᴏ <b>{}</b>,ᴍʏ ɴᴀᴍᴇ <b>{}</b>,ɪ ᴀᴍ ᴀᴅᴠᴀɴᴄᴇᴅ ᴀɴᴅ ᴘᴏᴡᴇʀꜰᴜʟ Resources Storage ʙᴏᴛ Created For 
+    START_TXT = """<b>Hᴇʟʟᴏ <b>{}</b>,ᴍʏ ɴᴀᴍᴇ Is <b>{}</b>,ɪ ᴀᴍ ᴀᴅᴠᴀɴᴄᴇᴅ ᴀɴᴅ ᴘᴏᴡᴇʀꜰᴜʟ Resources <b>Alchemist</b> Created For 
     <b>Excellerating Growth Of Mankind</b>."""
 
 
