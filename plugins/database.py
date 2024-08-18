@@ -1,3 +1,5 @@
+
+
 import logging
 from struct import pack
 import re
@@ -8,35 +10,43 @@ from umongo import Instance, Document, fields
 from motor.motor_asyncio import AsyncIOMotorClient
 from config import DB_URI, DB_NAME
 
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+
 COLLECTION_NAME = "Telegram_Files"
+
+
 
 client = AsyncIOMotorClient(DB_URI)
 db = client[DB_NAME]
 instance = Instance.from_db(db)
 
+
 @instance.register
 class Media(Document):
-    file_id = fields.StrField(attribute='_id', allow_none=True)  # Allow None to handle text messages
+    file_id = fields.StrField(attribute='_id')
     file_ref = fields.StrField(allow_none=True)
     file_name = fields.StrField(required=True)
     file_size = fields.IntField(required=True)
-    file_type = fields.StrField(required=True)  # Ensure all types, including text, are supported
+    file_type = fields.StrField(allow_none=True)
     mime_type = fields.StrField(allow_none=True)
     caption = fields.StrField(allow_none=True)
-    content = fields.StrField(allow_none=True)  # To store text message content
 
     class Meta:
         indexes = ('$file_name', )
         collection_name = COLLECTION_NAME
+
+
 
 async def get_file_details(query):
     filter = {'file_id': query}
     cursor = Media.find(filter)
     filedetails = await cursor.to_list(length=1)
     return filedetails
+
+
 
 def encode_file_id(s: bytes) -> str:
     r = b""
@@ -49,12 +59,16 @@ def encode_file_id(s: bytes) -> str:
             if n:
                 r += b"\x00" + bytes([n])
                 n = 0
+
             r += bytes([i])
 
     return base64.urlsafe_b64encode(r).decode().rstrip("=")
 
+
+
 def encode_file_ref(file_ref: bytes) -> str:
     return base64.urlsafe_b64encode(file_ref).decode().rstrip("=")
+
 
 def unpack_new_file_id(new_file_id):
     """Return file_id, file_ref"""
@@ -70,3 +84,4 @@ def unpack_new_file_id(new_file_id):
     )
     file_ref = encode_file_ref(decoded.file_reference)
     return file_id, file_ref
+
