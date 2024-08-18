@@ -11,37 +11,59 @@ from pyrogram.errors import AuthBytesInvalid
 from TechVJ.server.exceptions import FIleNotFound
 from pyrogram.file_id import FileId, FileType, ThumbnailSource
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)  # Adjust the level to DEBUG for more detailed logs
 
 class ByteStreamer:
     def __init__(self, client: Client):
-        """A custom class that holds the cache of a specific client and class functions."""
+        """A custom class that holds the cache of a specific client and class functions.
+        attributes:
+            client: the client that the cache is for.
+            cached_file_ids: a dict of cached file IDs.
+            cached_file_properties: a dict of cached file properties.
+        
+        functions:
+            generate_file_properties: returns the properties for a media of a specific message contained in Tuple.
+            generate_media_session: returns the media session for the DC that contains the media file.
+            yield_file: yield a file from telegram servers for streaming.
+            
+        This is a modified version of the <https://github.com/eyaadh/megadlbot_oss/blob/master/mega/telegram/utils/custom_download.py>
+        Thanks to Eyaadh <https://github.com/eyaadh>
+        """
         self.clean_timer = 30 * 60
         self.client: Client = client
         self.cached_file_ids: Dict[int, FileId] = {}
         asyncio.create_task(self.clean_cache())
 
     async def get_file_properties(self, id: int) -> FileId:
-        """Returns the properties of a media of a specific message in a FileId class."""
+        """
+        Returns the properties of a media of a specific message in a FIleId class.
+        if the properties are cached, then it'll return the cached results.
+        or it'll generate the properties from the Message ID and cache them.
+        """
         if id not in self.cached_file_ids:
             await self.generate_file_properties(id)
-            logger.debug(f"Cached file properties for message with ID {id}")
+            logging.debug(f"Cached file properties for message with ID {id}")
         return self.cached_file_ids[id]
     
     async def generate_file_properties(self, id: int) -> FileId:
-        """Generates the properties of a media file on a specific message."""
+        """
+        Generates the properties of a media file on a specific message.
+        returns ths properties in a FIleId class.
+        """
         file_id = await get_file_ids(self.client, LOG_CHANNEL, id)
-        logger.debug(f"Generated file ID and Unique ID for message with ID {id}")
+        logging.debug(f"Generated file ID and Unique ID for message with ID {id}")
         if not file_id:
-            logger.debug(f"Message with ID {id} not found")
+            logging.debug(f"Message with ID {id} not found")
             raise FIleNotFound
         self.cached_file_ids[id] = file_id
-        logger.debug(f"Cached media message with ID {id}")
+        logging.debug(f"Cached media message with ID {id}")
         return self.cached_file_ids[id]
 
     async def generate_media_session(self, client: Client, file_id: FileId) -> Session:
-        """Generates the media session for the DC that contains the media file."""
+        """
+        Generates the media session for the DC that contains the media file.
+        This is required for getting the bytes from Telegram servers.
+        """
+
         media_session = client.media_sessions.get(file_id.dc_id, None)
 
         if media_session is None:
@@ -70,7 +92,7 @@ class ByteStreamer:
                         )
                         break
                     except AuthBytesInvalid:
-                        logger.debug(
+                        logging.debug(
                             f"Invalid authorization bytes for DC {file_id.dc_id}"
                         )
                         continue
@@ -86,17 +108,20 @@ class ByteStreamer:
                     is_media=True,
                 )
                 await media_session.start()
-            logger.debug(f"Created media session for DC {file_id.dc_id}")
+            logging.debug(f"Created media session for DC {file_id.dc_id}")
             client.media_sessions[file_id.dc_id] = media_session
         else:
-            logger.debug(f"Using cached media session for DC {file_id.dc_id}")
+            logging.debug(f"Using cached media session for DC {file_id.dc_id}")
         return media_session
+
 
     @staticmethod
     async def get_location(file_id: FileId) -> Union[raw.types.InputPhotoFileLocation,
                                                      raw.types.InputDocumentFileLocation,
-                                                     raw.types.InputPeerPhotoFileLocation]:
-        """Returns the file location for the media file."""
+                                                     raw.types.InputPeerPhotoFileLocation,]:
+        """
+        Returns the file location for the media file.
+        """
         file_type = file_id.file_type
 
         if file_type == FileType.CHAT_PHOTO:
@@ -145,10 +170,14 @@ class ByteStreamer:
         part_count: int,
         chunk_size: int,
     ) -> Union[str, None]:
-        """Custom generator that yields the bytes of the media file."""
+        """
+        Custom generator that yields the bytes of the media file.
+        Modded from <https://github.com/eyaadh/megadlbot_oss/blob/master/mega/telegram/utils/custom_download.py#L20>
+        Thanks to Eyaadh <https://github.com/eyaadh>
+        """
         client = self.client
         work_loads[index] += 1
-        logger.debug(f"Starting to yield file with client {index}.")
+        logging.debug(f"Starting to yielding file with client {index}.")
         media_session = await self.generate_media_session(client, file_id)
 
         current_part = 1
@@ -185,15 +214,18 @@ class ByteStreamer:
                             location=location, offset=offset, limit=chunk_size
                         ),
                     )
-        except (TimeoutError, AttributeError) as e:
-            logger.error(f"Error yielding file: {e}")
+        except (TimeoutError, AttributeError):
+            pass
         finally:
-            logger.debug(f"Finished yielding file with {current_part} parts.")
+            logging.debug("Finished yielding file with {current_part} parts.")
             work_loads[index] -= 1
 
+    
     async def clean_cache(self) -> None:
-        """Function to clean the cache to reduce memory usage."""
+        """
+        function to clean the cache to reduce memory usage
+        """
         while True:
             await asyncio.sleep(self.clean_timer)
             self.cached_file_ids.clear()
-            logger.debug("Cleaned the cache")
+            logging.debug("Cleaned the cache")
