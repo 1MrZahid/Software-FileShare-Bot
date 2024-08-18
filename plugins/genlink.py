@@ -22,60 +22,74 @@ async def allowed(_, __, message):
         return True
     return False
 
-
-
-@Client.on_message((filters.document | filters.video | filters.audio) & filters.private & filters.create(allowed))
+@Client.on_message((filters.document | filters.video | filters.audio | filters.photo | filters.text) & filters.private & filters.create(allowed))
 async def incoming_gen_link(bot, message):
     username = (await bot.get_me()).username
     file_type = message.media
-    file_id, ref = unpack_new_file_id((getattr(message, file_type.value)).file_id)
+
+    if file_type is None:  # Handle text messages
+        file_type = "text"
+        content = message.text
+        file_id = base64.urlsafe_b64encode(content.encode("ascii")).decode().strip("=")
+    else:  # Handle media files
+        file_id, ref = unpack_new_file_id((getattr(message, file_type.value)).file_id)
+
     string = 'file_'
     string += file_id
     outstr = base64.urlsafe_b64encode(string.encode("ascii")).decode().strip("=")
+    
     user_id = message.from_user.id
     user = await get_user(user_id)
-    if WEBSITE_URL_MODE == True:
+    if WEBSITE_URL_MODE:
         share_link = f"{WEBSITE_URL}?Tech_VJ={outstr}"
     else:
         share_link = f"https://t.me/{username}?start={outstr}"
-    if user["base_site"] and user["shortener_api"] != None:
+    
+    if user["base_site"] and user["shortener_api"]:
         short_link = await get_short_link(user, share_link)
         await message.reply(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🖇️ sʜᴏʀᴛ ʟɪɴᴋ :- {short_link}</b>")
     else:
         await message.reply(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🔗 ᴏʀɪɢɪɴᴀʟ ʟɪɴᴋ :- {share_link}</b>")
-        
 
 @Client.on_message(filters.command(['link', 'plink']) & filters.create(allowed))
 async def gen_link_s(bot, message):
     username = (await bot.get_me()).username
     replied = message.reply_to_message
+
     if not replied:
         return await message.reply('Reply to a message to get a shareable link.')
+    
     file_type = replied.media
-    if file_type not in [enums.MessageMediaType.VIDEO, enums.MessageMediaType.AUDIO, enums.MessageMediaType.DOCUMENT]:
-        return await message.reply("**ʀᴇᴘʟʏ ᴛᴏ ᴀ sᴜᴘᴘᴏʀᴛᴇᴅ ᴍᴇᴅɪᴀ**")
+
+    if file_type is None:  # Handle text messages
+        file_type = "text"
+        content = replied.text
+        file_id = base64.urlsafe_b64encode(content.encode("ascii")).decode().strip("=")
+    else:  # Handle media files
+        if file_type not in [enums.MessageMediaType.VIDEO, enums.MessageMediaType.AUDIO, enums.MessageMediaType.DOCUMENT, enums.MessageMediaType.PHOTO]:
+            return await message.reply("**ʀᴇᴘʟʏ ᴛᴏ ᴀ sᴜᴘᴘᴏʀᴛᴇᴅ ᴍᴇᴅɪᴀ**")
+
+        file_id, ref = unpack_new_file_id((getattr(replied, file_type.value)).file_id)
+
     if message.has_protected_content and message.chat.id not in ADMINS:
         return await message.reply("okDa")
-
-
     
-    file_id, ref = unpack_new_file_id((getattr(replied, file_type.value)).file_id)
     string = 'filep_' if message.text.lower().strip() == "/plink" else 'file_'
     string += file_id
     outstr = base64.urlsafe_b64encode(string.encode("ascii")).decode().strip("=")
+    
     user_id = message.from_user.id
     user = await get_user(user_id)
-    if WEBSITE_URL_MODE == True:
+    if WEBSITE_URL_MODE:
         share_link = f"{WEBSITE_URL}?Tech_VJ={outstr}"
     else:
         share_link = f"https://t.me/{username}?start={outstr}"
-    if user["base_site"] and user["shortener_api"] != None:
+    
+    if user["base_site"] and user["shortener_api"]:
         short_link = await get_short_link(user, share_link)
         await message.reply(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🖇️ sʜᴏʀᴛ ʟɪɴᴋ :- {short_link}</b>")
     else:
         await message.reply(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🔗 ᴏʀɪɢɪɴᴀʟ ʟɪɴᴋ :- {share_link}</b>")
-        
-
 
 
 @Client.on_message(filters.command(['batch', 'pbatch']) & filters.create(allowed))
@@ -95,8 +109,6 @@ async def gen_link_batch(bot, message):
     f_msg_id = int(match.group(5))
     if f_chat_id.isnumeric():
         f_chat_id = int(("-100" + f_chat_id))
-
-
     
     match = regex.match(last)
     if not match:
@@ -124,8 +136,6 @@ async def gen_link_batch(bot, message):
     FRMT = "**ɢᴇɴᴇʀᴀᴛɪɴɢ ʟɪɴᴋ...**\n**ᴛᴏᴛᴀʟ ᴍᴇssᴀɢᴇs:** {total}\n**ᴅᴏɴᴇ:** {current}\n**ʀᴇᴍᴀɪɴɪɴɢ:** {rem}\n**sᴛᴀᴛᴜs:** {sts}"
 
     outlist = []
-
-
 
     # file store without db channel
     og_msg = 0
