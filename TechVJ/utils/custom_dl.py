@@ -28,7 +28,7 @@ class ByteStreamer:
         This is a modified version of the <https://github.com/eyaadh/megadlbot_oss/blob/master/mega/telegram/utils/custom_download.py>
         Thanks to Eyaadh <https://github.com/eyaadh>
         """
-        self.clean_timer = 30 * 60
+        self.clean_timer = 30 * 60  # Cache cleaning interval in seconds
         self.client: Client = client
         self.cached_file_ids: Dict[int, FileId] = {}
         asyncio.create_task(self.clean_cache())
@@ -47,7 +47,7 @@ class ByteStreamer:
     async def generate_file_properties(self, id: int) -> FileId:
         """
         Generates the properties of a media file on a specific message.
-        returns ths properties in a FIleId class.
+        returns the properties in a FIleId class.
         """
         file_id = await get_file_ids(self.client, LOG_CHANNEL, id)
         logging.debug(f"Generated file ID and Unique ID for message with ID {id}")
@@ -114,11 +114,10 @@ class ByteStreamer:
             logging.debug(f"Using cached media session for DC {file_id.dc_id}")
         return media_session
 
-
     @staticmethod
     async def get_location(file_id: FileId) -> Union[raw.types.InputPhotoFileLocation,
                                                      raw.types.InputDocumentFileLocation,
-                                                     raw.types.InputPeerPhotoFileLocation,]:
+                                                     raw.types.InputPeerPhotoFileLocation]:
         """
         Returns the file location for the media file.
         """
@@ -220,10 +219,9 @@ class ByteStreamer:
             logging.debug("Finished yielding file with {current_part} parts.")
             work_loads[index] -= 1
 
-    
     async def clean_cache(self) -> None:
         """
-        function to clean the cache to reduce memory usage
+        Function to clean the cache to reduce memory usage.
         """
         while True:
             await asyncio.sleep(self.clean_timer)
