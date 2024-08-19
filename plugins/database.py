@@ -47,7 +47,6 @@ async def get_text_content(query):
 def encode_file_id(s: bytes) -> str:
     r = b""
     n = 0
-
     for i in s + bytes([22]) + bytes([4]):
         if i == 0:
             n += 1
@@ -55,9 +54,7 @@ def encode_file_id(s: bytes) -> str:
             if n:
                 r += b"\x00" + bytes([n])
                 n = 0
-
             r += bytes([i])
-
     return base64.urlsafe_b64encode(r).decode().rstrip("=")
 
 def encode_file_ref(file_ref: bytes) -> str:
@@ -78,20 +75,29 @@ def unpack_new_file_id(new_file_id):
     file_ref = encode_file_ref(decoded.file_reference)
     return file_id, file_ref
 
-async def save_file(media):
+async def save_file(message):
     """Save file in database"""
+    if message.document:
+        file = message.document
+    elif message.video:
+        file = message.video
+    elif message.audio:
+        file = message.audio
+    elif message.photo:
+        file = message.photo
+    else:
+        return False, 0
 
-    # TODO: Find better way to get same file_id for same media to avoid duplicates
-    file_id, file_ref = unpack_new_file_id(media.file_id)
+    file_id, file_ref = unpack_new_file_id(file.file_id)
     
-    file_name = getattr(media, 'file_name', '')
-    file_size = getattr(media, 'file_size', 0)
-    file_type = getattr(media, 'file_type', '')
-    mime_type = getattr(media, 'mime_type', '')
-    caption = getattr(media, 'caption', '')
+    file_name = getattr(file, 'file_name', '')
+    file_size = getattr(file, 'file_size', 0)
+    file_type = message.media.value
+    mime_type = getattr(file, 'mime_type', '')
+    caption = message.caption.html if message.caption else ''
     
     try:
-        file = Media(
+        media = Media(
             file_id=file_id,
             file_ref=file_ref,
             file_name=file_name,
@@ -100,33 +106,48 @@ async def save_file(media):
             mime_type=mime_type,
             caption=caption,
         )
-    except ValidationError:
-        logger.exception('Error occurred while saving file in database')
+        await media.commit()
+        logger.info(f'{file_name} is saved to database')
+        return True, 1
+    except DuplicateKeyError:
+        logger.warning(f'{file_name} is already saved in database')
+        return False, 2
+    except Exception as e:
+        logger.exception(f'Error occurred while saving file in database: {str(e)}')
         return False, 0
-    else:
-        try:
-            await file.commit()
-        except DuplicateKeyError:
-            logger.warning(
-                f'{getattr(media, "file_name", "NO_FILE")} is already saved in database'
-            )
-            return False, 2
-        else:
-            logger.info(f'{getattr(media, "file_name", "NO_FILE")} is saved to database')
-            return True, 1
 
 async def save_text_content(file_id, text_content):
     """Save text content in database"""
+    try:
+        media = Media(
+            file_id=file_id,
+            file_name='text_message',
+            file_size=len(text_content),
+            file_type='text',
+            text_content=text_content
+        )
+        await media.commit()
+        logger.info(f'Text content saved for file_id: {file_id}')
+        return True
+    except DuplicateKeyError:
+        logger.warning(f'Text content with file_id: {file_id} already exists')
+        return False
+    except Exception as e:
+        logger.exception(f'Error occurred while saving text content: {str(e)}')
+        return False
+
+async def update_text_content(file_id, text_content):
+    """Update existing text content in database"""
     try:
         media = await Media.find_one({'file_id': file_id})
         if media:
             media.text_content = text_content
             await media.commit()
-            logger.info(f'Text content saved for file_id: {file_id}')
+            logger.info(f'Text content updated for file_id: {file_id}')
             return True
         else:
             logger.warning(f'No media found for file_id: {file_id}')
             return False
     except Exception as e:
-        logger.exception(f'Error occurred while saving text content: {str(e)}')
+        logger.exception(f'Error occurred while updating text content: {str(e)}')
         return False
