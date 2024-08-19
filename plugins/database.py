@@ -1,5 +1,3 @@
-
-
 import logging
 from struct import pack
 import re
@@ -10,19 +8,14 @@ from umongo import Instance, Document, fields
 from motor.motor_asyncio import AsyncIOMotorClient
 from config import DB_URI, DB_NAME
 
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-
 COLLECTION_NAME = "Telegram_Files"
-
-
 
 client = AsyncIOMotorClient(DB_URI)
 db = client[DB_NAME]
 instance = Instance.from_db(db)
-
 
 @instance.register
 class Media(Document):
@@ -33,12 +26,11 @@ class Media(Document):
     file_type = fields.StrField(allow_none=True)
     mime_type = fields.StrField(allow_none=True)
     caption = fields.StrField(allow_none=True)
+    text_content = fields.StrField(allow_none=True)  # New field for text messages
 
     class Meta:
         indexes = ('$file_name', )
         collection_name = COLLECTION_NAME
-
-
 
 async def get_file_details(query):
     filter = {'file_id': query}
@@ -46,7 +38,11 @@ async def get_file_details(query):
     filedetails = await cursor.to_list(length=1)
     return filedetails
 
-
+async def get_text_content(query):
+    filter = {'file_id': query, 'text_content': {'$exists': True}}
+    cursor = Media.find(filter)
+    text_details = await cursor.to_list(length=1)
+    return text_details
 
 def encode_file_id(s: bytes) -> str:
     r = b""
@@ -64,11 +60,8 @@ def encode_file_id(s: bytes) -> str:
 
     return base64.urlsafe_b64encode(r).decode().rstrip("=")
 
-
-
 def encode_file_ref(file_ref: bytes) -> str:
     return base64.urlsafe_b64encode(file_ref).decode().rstrip("=")
-
 
 def unpack_new_file_id(new_file_id):
     """Return file_id, file_ref"""
@@ -85,3 +78,55 @@ def unpack_new_file_id(new_file_id):
     file_ref = encode_file_ref(decoded.file_reference)
     return file_id, file_ref
 
+async def save_file(media):
+    """Save file in database"""
+
+    # TODO: Find better way to get same file_id for same media to avoid duplicates
+    file_id, file_ref = unpack_new_file_id(media.file_id)
+    
+    file_name = getattr(media, 'file_name', '')
+    file_size = getattr(media, 'file_size', 0)
+    file_type = getattr(media, 'file_type', '')
+    mime_type = getattr(media, 'mime_type', '')
+    caption = getattr(media, 'caption', '')
+    
+    try:
+        file = Media(
+            file_id=file_id,
+            file_ref=file_ref,
+            file_name=file_name,
+            file_size=file_size,
+            file_type=file_type,
+            mime_type=mime_type,
+            caption=caption,
+        )
+    except ValidationError:
+        logger.exception('Error occurred while saving file in database')
+        return False, 0
+    else:
+        try:
+            await file.commit()
+        except DuplicateKeyError:
+            logger.warning(
+                f'{getattr(media, "file_name", "NO_FILE")} is already saved in database'
+            )
+            return False, 2
+        else:
+            logger.info(f'{getattr(media, "file_name", "NO_FILE")} is saved to database')
+            return True, 1
+
+async def save_text_content(file_id, text_content):
+    """Save text content in database"""
+    try:
+        media = await Media.find_one({'file_id': file_id})
+        if media:
+            media.text_content = text_content
+            await media.commit()
+            logger.info(f'Text content saved for file_id: {file_id}')
+            return True
+        else:
+            logger.warning(f'No media found for file_id: {file_id}')
+            return False
+    except Exception as e:
+        logger.exception(f'Error occurred while saving text content: {str(e)}')
+        return False
