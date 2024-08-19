@@ -24,48 +24,26 @@ async def allowed(_, __, message):
 
 
 
-@Client.on_message((filters.document | filters.video | filters.audio | filters.photo | filters.text) & filters.private & filters.create(allowed))
+@Client.on_message((filters.document | filters.video | filters.audio) & filters.private & filters.create(allowed))
 async def incoming_gen_link(bot, message):
     username = (await bot.get_me()).username
-
-    if message.document:
-        file_type = "document"
-    elif message.video:
-        file_type = "video"
-    elif message.audio:
-        file_type = "audio"
-    elif message.photo:
-        file_type = "photo"
-    elif message.text:
-        file_type = "text"
-    else:
-        return await message.reply("Unsupported message type")
-
-    if file_type != "text":
-        file_id, ref = unpack_new_file_id(getattr(message, file_type).file_id)
-        await save_file(message, file_type, file_id, ref)
-        string = f'file_{file_id}'
-    else:
-        file_id = f"text_{message.message_id}"
-        await save_text_content(file_id, message.text)
-        string = file_id
-
+    file_type = message.media
+    file_id, ref = unpack_new_file_id((getattr(message, file_type.value)).file_id)
+    string = 'file_'
+    string += file_id
     outstr = base64.urlsafe_b64encode(string.encode("ascii")).decode().strip("=")
-    
     user_id = message.from_user.id
     user = await get_user(user_id)
-    
     if WEBSITE_URL_MODE == True:
         share_link = f"{WEBSITE_URL}?Tech_VJ={outstr}"
     else:
         share_link = f"https://t.me/{username}?start={outstr}"
-    
     if user["base_site"] and user["shortener_api"] != None:
         short_link = await get_short_link(user, share_link)
-        await message.reply(f"<b>⭕️ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🖇 sʜᴏʀᴛ ʟɪɴᴋ :- {short_link}</b>")
+        await message.reply(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🖇️ sʜᴏʀᴛ ʟɪɴᴋ :- {short_link}</b>")
     else:
-        await message.reply(f"<b>⭕️ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🔗 ᴏʀɪɢɪɴᴀʟ ʟɪɴᴋ :- {share_link}</b>")
-
+        await message.reply(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🔗 ᴏʀɪɢɪɴᴀʟ ʟɪɴᴋ :- {share_link}</b>")
+        
 
 @Client.on_message(filters.command(['link', 'plink']) & filters.create(allowed))
 async def gen_link_s(bot, message):
@@ -73,31 +51,31 @@ async def gen_link_s(bot, message):
     replied = message.reply_to_message
     if not replied:
         return await message.reply('Reply to a message to get a shareable link.')
-    
     file_type = replied.media
-    if file_type not in [enums.MessageMediaType.VIDEO, enums.MessageMediaType.AUDIO, enums.MessageMediaType.DOCUMENT, enums.MessageMediaType.PHOTO, enums.MessageMediaType.TEXT]:
-        return await message.reply("ʀᴇᴘʟʏ ᴛᴏ ᴀ sᴜᴘᴘᴏʀᴛᴇᴅ ᴍᴇᴅɪᴀ")
-    
+    if file_type not in [enums.MessageMediaType.VIDEO, enums.MessageMediaType.AUDIO, enums.MessageMediaType.DOCUMENT]:
+        return await message.reply("**ʀᴇᴘʟʏ ᴛᴏ ᴀ sᴜᴘᴘᴏʀᴛᴇᴅ ᴍᴇᴅɪᴀ**")
     if message.has_protected_content and message.chat.id not in ADMINS:
         return await message.reply("okDa")
 
+    
     file_id, ref = unpack_new_file_id((getattr(replied, file_type.value)).file_id)
     string = 'filep_' if message.text.lower().strip() == "/plink" else 'file_'
     string += file_id
     outstr = base64.urlsafe_b64encode(string.encode("ascii")).decode().strip("=")
     user_id = message.from_user.id
     user = await get_user(user_id)
-    
     if WEBSITE_URL_MODE == True:
         share_link = f"{WEBSITE_URL}?Tech_VJ={outstr}"
     else:
         share_link = f"https://t.me/{username}?start={outstr}"
-    
     if user["base_site"] and user["shortener_api"] != None:
         short_link = await get_short_link(user, share_link)
-        await message.reply(f"<b>⭕️ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🖇 sʜᴏʀᴛ ʟɪɴᴋ :- {short_link}</b>")
+        await message.reply(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🖇️ sʜᴏʀᴛ ʟɪɴᴋ :- {short_link}</b>")
     else:
-        await message.reply(f"<b>⭕️ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🔗 ᴏʀɪɢɪɴᴀʟ ʟɪɴᴋ :- {share_link}</b>")
+        await message.reply(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🔗 ᴏʀɪɢɪɴᴀʟ ʟɪɴᴋ :- {share_link}</b>")
+        
+
+
 
 @Client.on_message(filters.command(['batch', 'pbatch']) & filters.create(allowed))
 async def gen_link_batch(bot, message):
@@ -117,6 +95,8 @@ async def gen_link_batch(bot, message):
     if f_chat_id.isnumeric():
         f_chat_id = int(("-100" + f_chat_id))
 
+
+    
     match = regex.match(last)
     if not match:
         return await message.reply('Invalid link')
