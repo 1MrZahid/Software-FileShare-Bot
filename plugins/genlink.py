@@ -32,11 +32,14 @@ async def incoming_gen_link(bot, message):
         file_type = message.media
         file_id, ref = unpack_new_file_id((getattr(message, file_type.value)).file_id)
         string = 'file_' + file_id
+        await save_file(message)
     elif message.text:
-        string = 'text_' + message.text
+        string = 'text_' + base64.urlsafe_b64encode(message.text.encode("utf-8")).decode().strip("=")
+        await save_text_content(string, message.text)
     elif message.photo:
         file_id, ref = unpack_new_file_id(message.photo.file_id)
         string = 'photo_' + file_id
+        await save_file(message)
     
     outstr = base64.urlsafe_b64encode(string.encode("ascii")).decode().strip("=")
     
