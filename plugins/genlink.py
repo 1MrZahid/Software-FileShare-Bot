@@ -28,18 +28,27 @@ async def allowed(_, __, message):
 async def incoming_gen_link(bot, message):
     username = (await bot.get_me()).username
     
-    if message.media:
-        file_type = message.media
-        file_id, ref = unpack_new_file_id((getattr(message, file_type.value)).file_id)
+    if message.document:
+        file_id, ref = unpack_new_file_id(message.document.file_id)
         string = 'file_' + file_id
-        await save_file(message)
-    elif message.text:
-        string = 'text_' + base64.urlsafe_b64encode(message.text.encode("utf-8")).decode().strip("=")
-        await save_text_content(string, message.text)
+    elif message.video:
+        file_id, ref = unpack_new_file_id(message.video.file_id)
+        string = 'file_' + file_id
+    elif message.audio:
+        file_id, ref = unpack_new_file_id(message.audio.file_id)
+        string = 'file_' + file_id
     elif message.photo:
         file_id, ref = unpack_new_file_id(message.photo.file_id)
         string = 'photo_' + file_id
+    elif message.text:
+        string = 'text_' + base64.urlsafe_b64encode(message.text.encode("utf-8")).decode().strip("=")
+    else:
+        return await message.reply("Unsupported message type")
+    
+    if message.media:
         await save_file(message)
+    elif message.text:
+        await save_text_content(string, message.text)
     
     outstr = base64.urlsafe_b64encode(string.encode("ascii")).decode().strip("=")
     
@@ -56,7 +65,6 @@ async def incoming_gen_link(bot, message):
         await message.reply(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🖇️ sʜᴏʀᴛ ʟɪɴᴋ :- {short_link}</b>")
     else:
         await message.reply(f"<b>⭕ ʜᴇʀᴇ ɪs ʏᴏᴜʀ ʟɪɴᴋ:\n\n🔗 ᴏʀɪɢɪɴᴀʟ ʟɪɴᴋ :- {share_link}</b>")
-        
 
 @Client.on_message(filters.command(['link', 'plink']) & filters.create(allowed))
 async def gen_link_s(bot, message):
