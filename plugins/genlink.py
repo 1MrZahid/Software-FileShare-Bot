@@ -27,12 +27,31 @@ async def allowed(_, __, message):
 @Client.on_message((filters.document | filters.video | filters.audio | filters.photo | filters.text) & filters.private & filters.create(allowed))
 async def incoming_gen_link(bot, message):
     username = (await bot.get_me()).username
-    file_type = message.media
-    file_id, ref = unpack_new_file_id((getattr(message, file_type.value)).file_id)
-    
-    string = 'file_'
-    string += file_id
+
+    if message.document:
+        file_type = "document"
+    elif message.video:
+        file_type = "video"
+    elif message.audio:
+        file_type = "audio"
+    elif message.photo:
+        file_type = "photo"
+    elif message.text:
+        file_type = "text"
+    else:
+        return await message.reply("Unsupported message type")
+
+    if file_type != "text":
+        file_id, ref = unpack_new_file_id(getattr(message, file_type).file_id)
+        await save_file(message, file_type, file_id, ref)
+        string = f'file_{file_id}'
+    else:
+        file_id = f"text_{message.message_id}"
+        await save_text_content(file_id, message.text)
+        string = file_id
+
     outstr = base64.urlsafe_b64encode(string.encode("ascii")).decode().strip("=")
+    
     user_id = message.from_user.id
     user = await get_user(user_id)
     
