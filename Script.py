@@ -11,7 +11,7 @@ class script(object):
 
 sɪᴢᴇ ⚙️: {file_size}
 
-Jᴏɪɴ [Our Empire](https://t.me/Excellerator)</b>""" 
+Jᴏɪɴ [Our Empire](https://t.me/Excellerators)</b>""" 
 
 
 
