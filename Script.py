@@ -83,7 +83,7 @@ First Send /clone command then follow below steps.
 
 🔻 It Works Only With Links Provided By Excellerator Community. 
 
-🔻 seamlessly Stream and download Your Content And Improve </b>"""
+🔻 Seamlessly Stream and download Your Content And Improve </b>"""
 
 
 
