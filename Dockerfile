@@ -7,7 +7,7 @@ COPY requirements.txt /requirements.txt
 
 RUN cd /
 RUN pip3 install -U pip && pip3 install -U -r requirements.txt
-RUN mkdir /2-Empire-Auto-Filter-Bot
-WORKDIR /2-Empire-Auto-Filter-Bot
-COPY . /2-Empire-Auto-Filter-Bot
+RUN mkdir /Empire-FileShare-Bot
+WORKDIR /Empire-FileShare-Bot
+COPY . /Empire-FileShare-Bot
 CMD ["python", "bot.py"]
