@@ -8,10 +8,10 @@ class script(object):
 
     
     CAPTION = """<b>📂 ғɪʟᴇɴᴀᴍᴇ : {file_name}
-
+    
 sɪᴢᴇ ⚙️: {file_size}
 
-Jᴏɪɴ [Our Empire](https://t.me/Excellerators)</b>""" 
+Explore Our [Empire Here](https://t.me/Excellerators)</b>""" 
 
 
 
@@ -102,7 +102,7 @@ First Send /clone command then follow below steps.
 
 
 
-    LOG_TEXT = """<b> #Boss New User Added To Database 🔥
+    LOG_TEXT = """<b> New User Added To Database 🔥
     
 ID - <code>{}</code>
 
