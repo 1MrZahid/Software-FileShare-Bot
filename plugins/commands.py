@@ -176,12 +176,12 @@ async def start(client, message):
                         quote=True,
                         disable_web_page_preview=True,
                         reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🚀 Fast Download 🚀", url=download),  # we download Link
-                                                            InlineKeyboardButton('🖥️ Watch online 🖥️', url=stream)]])  # web stream Link
+                                                            InlineKeyboardButton('🖥️ Stream online 🖥️', url=stream)]])  # web stream Link
                     )
                 if STREAM_MODE == True:
                     button = [[
                         InlineKeyboardButton("🚀 Fast Download 🚀", url=download),  # we download Link
-                        InlineKeyboardButton('🖥️ Watch online 🖥️', url=stream)
+                        InlineKeyboardButton('🖥️ Stream online 🖥️', url=stream)
                     ],[
                         InlineKeyboardButton("• ᴡᴀᴛᴄʜ ɪɴ ᴡᴇʙ ᴀᴘᴘ •", web_app=WebAppInfo(url=stream))
                     ]]
@@ -266,7 +266,7 @@ async def start(client, message):
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton('🚀 Fast Download / Watch Online🖥️', callback_data=f'generate_stream_link:{file_id}')
+                                InlineKeyboardButton('🚀 Fast Download / Stream Online🖥️', callback_data=f'generate_stream_link:{file_id}')
                             ]
                         ]
                     )
