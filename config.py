@@ -24,6 +24,8 @@ PICS = (environ.get('PICS', 'https://freeimage.host/i/d10VHep')).split() # Bot S
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '1178233430').split()]
 BOT_USERNAME = environ.get("BOT_USERNAME", "R3volutionary_Bot") # without @
 PORT = environ.get("PORT", "8080")
+USER_REPLY_TEXT = "❌Don't send me messages! You Can't Use Me. I am only meant For @tactition."
+
 
 # Clone Info :-
 CLONE_MODE = bool(environ.get('CLONE_MODE', False)) # Set True or False
