@@ -7,7 +7,7 @@ COPY requirements.txt /requirements.txt
 
 RUN cd /
 RUN pip3 install -U pip && pip3 install -U -r requirements.txt
-RUN mkdir /Empire-FileShare-Bot
-WORKDIR /Empire-FileShare-Bot
-COPY . /Empire-FileShare-Bot
+RUN mkdir /Software-FileShare-Bot
+WORKDIR /Software-FileShare-Bot
+COPY . /Software-FileShare-Bot
 CMD ["python", "bot.py"]
