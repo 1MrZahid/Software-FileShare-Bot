@@ -1,7 +1,7 @@
 import re
 from pyrogram import filters, Client, enums
 from pyrogram.errors.exceptions.bad_request_400 import ChannelInvalid, UsernameInvalid, UsernameNotModified
-from config import ADMINS, LOG_CHANNEL, PUBLIC_FILE_STORE, WEBSITE_URL, WEBSITE_URL_MODE
+from config import ADMINS, LOG_CHANNEL, PUBLIC_FILE_STORE, WEBSITE_URL, WEBSITE_URL_MODE, USER_REPLY_TEXT
 from plugins.database import unpack_new_file_id
 from plugins.users_api import get_user, get_short_link
 import re
@@ -23,6 +23,10 @@ async def allowed(_, __, message):
     return False
 
 
+@Bot.on_message(filters.private & filters.incoming)
+async def useless(message: Message):
+    if USER_REPLY_TEXT:
+        await message.reply(USER_REPLY_TEXT)
 
 @Client.on_message((filters.document | filters.video | filters.audio) & filters.private & filters.create(allowed))
 async def incoming_gen_link(bot, message):
