@@ -16,6 +16,7 @@
  
 - [x] Permanent Link By Using Website [ Premium Feature] 
 - [x] Clone Feature Added [ Premium Feature] 
+- [x] Force Sub Main Channel 
 - [x] Token Verification Feature 
 - [x] Stram Feature Added With Many Player Support
 - [x] Custom Url Shortner Support Any User Can Add His Own Shortner
