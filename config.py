@@ -15,7 +15,7 @@ def is_enabled(value, default):
 # Bot Information
 API_ID = int(environ.get("API_ID", "26205215"))
 API_HASH = environ.get("API_HASH", "d4d9b7bce6d76bec759e404ecf2c3ebf")
-BOT_TOKEN = environ.get("BOT_TOKEN", "7235447334:AAFZ4rBUNV6wsD2hvMB3zXxlU7M9GFj7dGM")
+BOT_TOKEN = environ.get("BOT_TOKEN", "")
 
 # force sub cahnel id
 AUTH_CHANNEL = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('AUTH_CHANNEL', '-1002183158596').split()]
