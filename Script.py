@@ -33,7 +33,8 @@ If You Want To Remove Api Then Copy This And Send To Bot - `/api None`"""
 
 
 
-    ABOUT_TXT = """<b>.
+    ABOUT_TXT = """<b>
+𝘼𝙡𝙝𝙖𝙢𝙙𝙪𝙡𝙞𝙡𝙖𝙝 : 𝖶𝗈𝗋𝗄𝗂𝗇𝗀 𝗍𝗈 𝖲𝖾𝗋𝗏𝖾 𝖧𝗎𝗆𝖺𝗇𝗂𝗍𝗒 𝗂𝗇 𝖺 𝗐𝗈𝗋𝗅𝖽 𝗐𝗁𝖾𝗋𝖾 𝖭𝗈𝗍𝗁𝗂𝗇𝗀 𝖼𝗈𝗆𝖾𝗌 𝖥𝗋𝖾𝖾, 𝖲𝗈 𝗒𝗈𝗎 𝗐𝗈𝗇’𝗍 𝖻𝖾 𝗁𝖾𝗅𝖽 𝖻𝖺𝖼𝗄 𝗂𝗇 𝖫𝗂𝖿𝖾.
 
 🤖 ᴍʏ ɴᴀᴍᴇ: {}
 
