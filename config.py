@@ -17,7 +17,8 @@ API_ID = int(environ.get("API_ID", "26205215"))
 API_HASH = environ.get("API_HASH", "d4d9b7bce6d76bec759e404ecf2c3ebf")
 BOT_TOKEN = environ.get("BOT_TOKEN", "")
 
-AUTH_CHANNEL = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('AUTH_CHANNEL', '0').split()]
+# force sub cahnel id
+AUTH_CHANNEL = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('AUTH_CHANNEL', '-1002183158596').split()]
 
 PICS = (environ.get('PICS', 'https://freeimage.host/i/d10VHep')).split() # Bot Start Picture
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '1178233430').split()]
@@ -32,7 +33,7 @@ CDB_NAME = environ.get("CDB_NAME", "")
 
 # Database Information
 DB_URI = environ.get("DB_URI", "mongodb+srv://ZahidNazir:ZahidNazir@1stcluster.1p0dlne.mongodb.net/?retryWrites=true&w=majority&appName=1stcluster")
-DB_NAME = environ.get("DB_NAME", "EmpireUsers")
+DB_NAME = environ.get("DB_NAME", "Pc_Channel")
 
 # Auto Delete Information
 AUTO_DELETE_MODE = bool(environ.get('AUTO_DELETE_MODE', True)) # Set True or False
@@ -49,7 +50,7 @@ CUSTOM_FILE_CAPTION = environ.get("CUSTOM_FILE_CAPTION", f"{script.CAPTION}")
 BATCH_FILE_CAPTION = environ.get("BATCH_FILE_CAPTION", CUSTOM_FILE_CAPTION)
 
 # Enable - True or Disable - False
-PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "False")), True)
+PUBLIC_FILE_STORE = is_enabled((environ.get('PUBLIC_FILE_STORE', "False")), False)
 
 # Verify Info :-
 VERIFY_MODE = bool(environ.get('VERIFY_MODE', False)) # Set True or False
