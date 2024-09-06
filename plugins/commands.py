@@ -48,9 +48,13 @@ def get_size(size):
 # here is the user reply message 
 @Client.on_message(filters.private & filters.text)
 async def reply_to_random_messages(client, message: Message):
+    # Check if the message contains a command or the specific whitelisted link
+    whitelisted_link = "https://t.me/R3volutionary_Bot?"
+    if message.text.startswith("/") or whitelisted_link in message.text:
+        # If it's a command or the whitelisted link, do nothing
+        return
     # Define the reply text
-    reply_text = "❌Don't send me messages!, @Tactition Has Blocked the Random Text."
-    
+    reply_text = "❌Don't send me messages!, @Tactition Has Blocked the Random Text I Can't Reply ." 
     # Send the reply to the user
     await message.reply(reply_text)
 
