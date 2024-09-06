@@ -15,7 +15,7 @@ def is_enabled(value, default):
 # Bot Information
 API_ID = int(environ.get("API_ID", "26205215"))
 API_HASH = environ.get("API_HASH", "d4d9b7bce6d76bec759e404ecf2c3ebf")
-BOT_TOKEN = environ.get("BOT_TOKEN", "")
+BOT_TOKEN = environ.get("BOT_TOKEN", "7235447334:AAFZ4rBUNV6wsD2hvMB3zXxlU7M9GFj7dGM")
 
 # force sub cahnel id
 AUTH_CHANNEL = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('AUTH_CHANNEL', '-1002183158596').split()]
@@ -24,8 +24,6 @@ PICS = (environ.get('PICS', 'https://freeimage.host/i/d10VHep')).split() # Bot S
 ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '1178233430').split()]
 BOT_USERNAME = environ.get("BOT_USERNAME", "R3volutionary_Bot") # without @
 PORT = environ.get("PORT", "8080")
-USER_REPLY_TEXT = "❌Don't send me messages! You Can't Use Me. I am only meant For @tactition."
-
 
 # Clone Info :-
 CLONE_MODE = bool(environ.get('CLONE_MODE', False)) # Set True or False
