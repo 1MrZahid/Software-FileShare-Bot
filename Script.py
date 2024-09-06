@@ -43,9 +43,9 @@ If You Want To Remove Api Then Copy This And Send To Bot - `/api None`"""
 
 🧑🏻‍💻 ᴅᴇᴠᴇʟᴏᴘᴇʀ: <a href=https://t.me/tactition>Tactition</a>
 
-👥 sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ: <a href=https://t.me/TeamExcellerators>Join Here</a>
+👥 sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ: <a href=https://t.me/Excellerators> Join Here </a>
 
-📢 Main ᴄʜᴀɴɴᴇʟ: <a href=https://t.me/Excellerators</a></b>
+📢 Main ᴄʜᴀɴɴᴇʟ: <a href=https://t.me/Excellerator>Excellerator</a></b>
 """
 
     CABOUT_TXT = """<b>ʜɪ ɪ ᴀᴍ ᴘᴇʀᴍᴀɴᴇɴᴛ ғɪʟᴇ sᴛᴏʀᴇ ʙᴏᴛ ᴡɪᴛʜ ᴄʟᴏɴᴇ ғᴇᴀᴛᴜʀᴇ + ᴄᴜsᴛᴏᴍ ᴜʀʟ sʜᴏʀᴛɴᴇʀ ɪᴛ ᴍᴇᴀɴs ᴀɴʏ ᴜsᴇʀ ᴄᴀɴ sᴇᴛ ʜɪs ᴜʀʟ sʜᴏʀᴛɴᴇʀ ᴀɴᴅ + ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ.
@@ -115,5 +115,4 @@ Nᴀᴍᴇ - {}</b>
 ⏰ Tɪᴍᴇ : <code>{}</code>
 🌐 Status: <code>Encrypted</code>
 🛠️ Bᴜɪʟᴅ Sᴛᴀᴛᴜs: <code>v1 By <b>@Tactition</b> [Sᴛᴀʙʟᴇ]</code></b>"""
-
 
