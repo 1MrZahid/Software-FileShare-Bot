@@ -31,11 +31,22 @@ If You Want To Remove Api Then Copy This And Send To Bot - `/api None`"""
 
 ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛʜɪs ғᴇᴀᴛᴜʀᴇ ᴛʜᴇɴ ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ᴏᴡɴ ᴄʟᴏɴᴇ ʙᴏᴛ ғʀᴏᴍ ᴍʏ <a href=https://t.me/Excellerator >ᴘᴀʀᴇɴᴛ</a></b>"""
 
+    ABOUT_TXT = """<b>
+    𝘼𝙡𝙝𝙖𝙢𝙙𝙪𝙡𝙞𝙡𝙖𝙝 : 𝖶𝗈𝗋𝗄𝗂𝗇𝗀 𝗍𝗈 𝖲𝖾𝗋𝗏𝖾 𝖧𝗎𝗆𝖺𝗇𝗂𝗍𝗒 𝗂𝗇 𝖺 𝗐𝗈𝗋𝗅𝖽 𝗐𝗁𝖾𝗋𝖾 𝖭𝗈𝗍𝗁𝗂𝗇𝗀 𝖼𝗈𝗆𝖾𝗌 𝖥𝗋𝖾𝖾, 𝖲𝗈 𝗒𝗈𝗎 𝗐𝗈𝗇’𝗍 𝖻𝖾 𝗁𝖾𝗅𝖽 𝖻𝖺𝖼𝗄 𝗂𝗇 𝖫𝗂𝖿𝖾.
 
+🤖 ɴᴀᴍᴇ: {}
 
-    ABOUT_TXT = """
-    about walal text simple
+📝 ʟᴀɴɢᴜᴀɢᴇ: <a href=https://www.python.org>𝐏𝐲𝐭𝐡𝐨𝐧3</a>
+
+📚 ʟɪʙʀᴀʀʏ: <a href=https://docs.pyrogram.org>𝐏𝐲𝐫𝐨𝐠𝐫𝐚𝐦</a>
+
+🧑🏻‍💻 ᴅᴇᴠᴇʟᴏᴘᴇʀ: <a href=https://t.me/tactition>Tactition</a>
+
+👥 sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ: <a href=https://t.me/TeamExcellerators>Join Here</a>
+
+📢 Main ᴄʜᴀɴɴᴇʟ: <a href=https://t.me/Excellerators>Excellerators</a></b>
 """
+
 
     CABOUT_TXT = """<b>ʜɪ ɪ ᴀᴍ ᴘᴇʀᴍᴀɴᴇɴᴛ ғɪʟᴇ sᴛᴏʀᴇ ʙᴏᴛ ᴡɪᴛʜ ᴄʟᴏɴᴇ ғᴇᴀᴛᴜʀᴇ + ᴄᴜsᴛᴏᴍ ᴜʀʟ sʜᴏʀᴛɴᴇʀ ɪᴛ ᴍᴇᴀɴs ᴀɴʏ ᴜsᴇʀ ᴄᴀɴ sᴇᴛ ʜɪs ᴜʀʟ sʜᴏʀᴛɴᴇʀ ᴀɴᴅ + ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ.
 
